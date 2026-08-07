@@ -130,7 +130,6 @@ func runServer(args []string) {
 
 	slog.Info("node listening", "id", *id, "addr", addr)
 
-	// Wait for shutdown signal.
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
 	<-sigCh
@@ -289,7 +288,6 @@ func runDemo() {
 		go srv.ListenAndServe()
 	}
 
-	// Start all nodes.
 	for _, node := range nodes {
 		node.Start()
 	}

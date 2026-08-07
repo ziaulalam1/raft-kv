@@ -207,7 +207,6 @@ func RegisterHandlers(mux *http.ServeMux, node *Node) {
 		json.NewEncoder(w).Encode(reply)
 	})
 
-	// Status endpoint.
 	mux.HandleFunc("/raft/status", func(w http.ResponseWriter, r *http.Request) {
 		term, state, leader := node.GetState()
 		w.Header().Set("Content-Type", "application/json")

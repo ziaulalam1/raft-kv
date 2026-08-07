@@ -87,7 +87,7 @@ raft-kv/
     node.go              -- Raft state machine, election, replication
     log.go               -- Replicated log with consistency checks
     transport.go         -- HTTP transport and RPC message types
-    raft_test.go         -- 5 invariant tests
+    raft_test.go         -- 7 invariant tests
   store/
     kv.go                -- KV state machine applied from committed log
     kv_test.go           -- KV correctness tests (put, get, delete, partition)
