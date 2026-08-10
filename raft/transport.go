@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 )
 
 // --- RPC message types ---
@@ -219,21 +218,4 @@ func RegisterHandlers(mux *http.ServeMux, node *Node) {
 			"logLength":   node.GetLog().Len(),
 		})
 	})
-}
-
-// StartHTTPServer creates and starts an HTTP server for a node.
-// Returns the server so it can be shut down later.
-func StartHTTPServer(addr string, node *Node) *http.Server {
-	mux := http.NewServeMux()
-	RegisterHandlers(mux, node)
-
-	srv := &http.Server{
-		Addr:         addr,
-		Handler:      mux,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 5 * time.Second,
-	}
-
-	go srv.ListenAndServe()
-	return srv
 }
