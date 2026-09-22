@@ -33,7 +33,7 @@ Serial submission only (one write at a time, wait for accept). The 300-500ms ele
 
 ## Invariant tests
 
-Five tests verify the core Raft safety properties. All pass with the Go race detector enabled (`go test -race`).
+Seven invariant tests pass with the Go race detector enabled (`go test -race`): the five core safety properties below, plus conflict-term fast catch-up and PreVote term stability.
 
 | Test | Property | What it does |
 |------|----------|-------------|
@@ -42,6 +42,8 @@ Five tests verify the core Raft safety properties. All pass with the Go race det
 | `TestLeaderCompleteness_CommittedEntryInFutureLeaders` | Leader Completeness | Commits an entry, kills the leader, verifies the new leader has the committed entry |
 | `TestPartitionSafety_MinorityCannotElect` | Quorum | Partitions a 5-node cluster into 2+3, verifies the minority side cannot elect a leader |
 | `TestConvergence_LogsMatchAfterPartitionHeal` | Convergence | Partitions, writes to majority, heals, verifies all nodes converge to the same log |
+| `TestConflictTerm_StaleFollowerCatchesUpQuickly` | Conflict-term catch-up | Verifies a stale follower converges in one round trip via the conflict-term optimization |
+| `TestPreVote_PartitionedFollowerDoesNotBumpTerm` | PreVote | Verifies a partitioned follower cannot inflate the cluster term on rejoin |
 
 ```bash
 make race    # runs all tests with -race
